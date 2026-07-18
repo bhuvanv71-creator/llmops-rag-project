@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llmops-rag
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llmops-rag
+  template:
+    metadata:
+      labels:
+        app: llmops-rag
+    spec:
+      containers:
+      - name: llmops-rag
+        image: 598096478246.dkr.ecr.ap-south-1.amazonaws.com/llmops-rag:v2
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "900Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llmops-rag-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: llmops-rag
+  ports:
+  - port: 80
+    targetPort: 8000

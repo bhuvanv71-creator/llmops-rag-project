@@ -31,14 +31,21 @@ Question: {query.question}
 
 Answer:"""
 
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={"model": "qwen2.5:0.5b", "prompt": prompt, "stream": False}
-    )
-    answer = response.json()["response"]
+    answer = None
+    generation_error = None
+    try:
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={"model": "qwen2.5:0.5b", "prompt": prompt, "stream": False},
+            timeout=3
+        )
+        answer = response.json()["response"]
+    except requests.exceptions.RequestException as e:
+        generation_error = "Generation unavailable in this deployment (no local LLM runtime attached to this pod)."
 
     return {
         "question": query.question,
         "answer": answer,
+        "generation_note": generation_error,
         "sources": [d.page_content for d in docs]
     }
