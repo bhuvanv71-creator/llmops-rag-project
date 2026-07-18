@@ -1,0 +1,1 @@
+Kubernetes is an open-source container orchestration platform. It automates deployment, scaling, and management of containerized applications. Key concepts include Pods, Deployments, Services, and Nodes.

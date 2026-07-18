@@ -1,0 +1,1 @@
+Terraform is an infrastructure-as-code tool that lets you define cloud resources in declarative configuration files. It uses a plan-apply workflow and supports providers for AWS, Azure, GCP, and more.
